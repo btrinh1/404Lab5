@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>Edit</h2>
+	{% if session.logged_in %}
+	<form action="{{ request.path }}" method=post>
+		<dl>
+			<dt>Category:
+			<dd><input type=text name=category value="{{ task['category'] }}" /></p>
+			<dt>Priority:
+			<dd><input type=text name=priority value="{{ task['priority'] }}" /></p>
+			<dt>Description:
+			<dd><input type=text name=description value="{{ task['description'] }}" /></p>
+			<input type=submit value=Update>
+		</dl>
+	</form>
+	<a href="{{url_for('task') }}"> Cancel </a>
+	{% endif %}
+{% endblock %}

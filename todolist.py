@@ -37,9 +37,9 @@ def delete():
     removeTask(category, description, priority)
     flash('Task was successfully deleted')
     return redirect(url_for('task'))
-
+'''
 @app.route('/edit/<selectId>', methods=['GET','POST'])
-def edit():
+def edit(selectId):
     if not session.get('logged_in'):
         abort(401)
     if request.method =='POST':
@@ -50,7 +50,7 @@ def edit():
         flash('Task was successfully updated')
         return redirect(url_for('task'))
     return render_template('edit.html', tasks=query_db('SELECT * FROM tasks WHERE id = ?', [selectId], one=True))
-
+'''
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -97,9 +97,11 @@ def addTask(category, description, priority):
 def removeTask(category, description, priority):
     query_db('DELETE FROM tasks where category = ? and description = ? and priority = ?',[category, description, int(priority)], one=True)
     get_db().commit()
+'''
+incomplete
 def editTask(selectId, category, description, priority):
     query_db('UPDATE tasks set category = ? and description = ? and priority = ? WHERE id = ?', [category, description, int(priority), int(selectId)], one=True)
-
+'''
 if __name__ == '__main__':
     #query_db('CREATE TABLE IF NOT EXISTS tasks(id INTEGER PRIMARY KEY, description VARCHAR, category VARCHAR, priority INT)')
     app.debug = True
