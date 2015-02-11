@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+    <h2>Task</h2>
+    <form action="{{ url_for('task') }}" method="post">
+        <div class="field">
+            <label for="category">Category:</label>
+            <input type="text" name="category" id="category" />
+        </div>
+        <div class="field">
+            <label for="priority">Priority:</label>
+            <input type="number" name="priority" id="priority" />
+        </div>
+        <div class="field">
+            <label for="description">Description:</label>
+            <input type="text" name="description" id="description" />
+        </div>
+        <div class="field">
+            <input type="submit" value="Save" />
+        </div>
+    </form>
+{% endif %}
+
+<table class="entries">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Description</th>
+            <th>Operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task['category'] }}</td>
+            <td>{{ task['priority'] }}</td>
+            <td>{{ task['description'] }}</td>            
+            <td>
+            {% if session.logged_in %}
+                <form action="{{ url_for('delete') }}" method="post">
+                    <input type="hidden" name="category" value="{{ task['category'] }}" />
+                    <input type="hidden" name="priority" value="{{ task['priority'] }}" />
+                    <input type="hidden" name="description" value="{{ task['description'] }}" />
+                    <div class="field">
+                        <input type="submit" value="Delete" />
+                    </div>
+                </form>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
